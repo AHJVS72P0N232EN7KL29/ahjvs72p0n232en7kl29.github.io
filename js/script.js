@@ -229,13 +229,32 @@ if (document.getElementById('gallery')) {
   initGalleryLightbox();
 }
 
-// ─── BOUTON SONORE EN HAUT À DROITE ───
+// ─── BOUTON SONORE POUR MOBILE (CORRIGÉ) ───
 function initHeroSoundButton() {
   const soundBtn = document.getElementById('soundBtn');
   if (!soundBtn) return;
   
-  // Créer les deux sons avec Web Audio API (pas besoin de fichiers)
+  let audioCtx = null;
+  let isAudioInitialized = false;
+  
+  // Fonction pour initialiser l'audio (nécessaire sur mobile)
+  const initAudio = () => {
+    if (isAudioInitialized) return;
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    isAudioInitialized = true;
+  };
+  
   const playTwoSounds = () => {
+    // Initialiser l'audio au premier clic (nécessaire pour mobile)
+    if (!isAudioInitialized) {
+      initAudio();
+    }
+    
+    // Réactiver l'audio context si suspendu (mobile)
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    
     // Ajouter l'animation
     soundBtn.classList.add('playing');
     
@@ -248,26 +267,22 @@ function initHeroSoundButton() {
     icon.textContent = '⚡';
     text.textContent = 'PLAYING';
     
-    // Créer le contexte audio
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    
-    // Premier son (bip grave)
+    // Créer les sons (compatible mobile)
     const oscillator1 = audioCtx.createOscillator();
     const gain1 = audioCtx.createGain();
     oscillator1.connect(gain1);
     gain1.connect(audioCtx.destination);
-    oscillator1.frequency.value = 440; // La4
-    gain1.gain.value = 0.3;
+    oscillator1.frequency.value = 440;
+    gain1.gain.value = 0.2;
     oscillator1.start();
     
-    // Deuxième son (bip aigu) après 150ms
     setTimeout(() => {
       const oscillator2 = audioCtx.createOscillator();
       const gain2 = audioCtx.createGain();
       oscillator2.connect(gain2);
       gain2.connect(audioCtx.destination);
-      oscillator2.frequency.value = 880; // La5
-      gain2.gain.value = 0.3;
+      oscillator2.frequency.value = 880;
+      gain2.gain.value = 0.2;
       oscillator2.start();
       
       setTimeout(() => {
@@ -275,13 +290,10 @@ function initHeroSoundButton() {
       }, 200);
     }, 150);
     
-    // Arrêter le premier son
     setTimeout(() => {
       oscillator1.stop();
-      audioCtx.close();
     }, 300);
     
-    // Restaurer l'icône
     setTimeout(() => {
       soundBtn.classList.remove('playing');
       icon.textContent = originalIcon;
@@ -289,8 +301,11 @@ function initHeroSoundButton() {
     }, 400);
   };
   
-  // Version avec sons préchargés (si vous avez des fichiers)
-  const playWithFiles = () => {
+  // Pour mobile, il faut un geste utilisateur pour activer l'audio
+  soundBtn.addEventListener('click', playTwoSounds);
+  
+  // Alternative : utiliser des fichiers audio (plus fiable sur mobile)
+  const playWithAudioFiles = () => {
     soundBtn.classList.add('playing');
     
     const sound1 = new Audio('assets/sounds/alert-1.mp3');
@@ -298,27 +313,21 @@ function initHeroSoundButton() {
     sound1.volume = 0.85;
     sound2.volume = 0.15;
     
-    const icon = soundBtn.querySelector('.sound-icon');
-    const originalIcon = icon.textContent;
-    icon.textContent = '💥';
-    
-    sound1.play().catch(e => console.log('Son1 bloqué'));
+    sound1.play();
     setTimeout(() => {
-      sound2.play().catch(e => console.log('Son2 bloqué'));
+      sound2.play();
     }, 150);
     
     setTimeout(() => {
       soundBtn.classList.remove('playing');
-      icon.textContent = originalIcon;
     }, 400);
   };
   
-  // Choisir la méthode (Web Audio API par défaut, pas besoin de fichiers)
-  //soundBtn.addEventListener('click', playTwoSounds);
-  
-  // Alternative avec fichiers
-    soundBtn.addEventListener('click', playWithFiles);
+  // Utilisez cette version si vous avez des fichiers audio
+   soundBtn.addEventListener('click', playWithAudioFiles);
 }
+
+document.addEventListener('DOMContentLoaded', initHeroSoundButton);
 
 // Initialiser au chargement
 document.addEventListener('DOMContentLoaded', initHeroSoundButton);
