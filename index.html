@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ST4F1T</title>
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/ST4F1T_logo.png">
+  <link rel="apple-touch-icon" href="assets/ST4F1T_logo.png">  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="police-band"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <img src="assets/ST4F1T_logo.png" alt="ST4F1T Logo">
+    <div class="logo-text">
+      <span class="logo-main">ST4F1T</span>
+      <span class="logo-sub">CTF TEAM</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" data-section="about">ABOUT</a></li>
+    <li><a href="#" data-section="members">AGENTS</a></li>
+    <li><a href="#" data-section="achievements">ACHIEVEMENTS</a></li>
+    <li><a href="#" data-section="ctfs">CTFs</a></li>
+    <li><a href="#" data-section="gallery">GALLERY</a></li>
+    <li><a href="#" data-section="posts">POSTS</a></li>
+    <li><a href="#" data-section="contact">CONTACT</a></li>
+  </ul>
+</nav>
+
+<!-- HERO SECTION -->
+<section id="hero">
+  <div class="hero-livery" aria-hidden="true">
+    <div class="hero-livery-bar hlb1"></div>
+    <div class="hero-livery-bar hlb2"></div>
+    <div class="hero-livery-bar hlb3"></div>
+    <div class="hero-livery-bar hlb4"></div>
+  </div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-left">
+    <div class="hero-eyebrow">Digital Security · Morocco</div>
+    <h1 class="hero-title">
+      ST4F1T
+      <span class="line-red">CTF &</span>
+      <span class="line-green">CYBERSECURITY TEAM</span>
+    </h1>
+    <p class="hero-desc">
+      <strong>ST4F1T BAYDA KATBAN LIK F RETRO</strong>, we hunt vulnerabilities, capture flags, and defend the Moroccan cyberspace — competition after competition.
+    </p>
+    <div class="hero-btn-row">
+      <a href="#" data-section="members" class="btn-primary">THE TEAM</a>
+      <a href="#" data-section="achievements" class="btn-outline">ACHIEVEMENTS</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+      <div class="hero-right">
+    <!-- BOUTON SONORE EN HAUT À DROITE DU LOGO -->
+    <div class="sound-button-container">
+      <button id="soundBtn" class="sound-button-hero">
+        <span class="sound-icon">🛎</span>
+        <span class="sound-text">إضغط هنا تختفي صطافيط</span>
+      </button>
+    </div>
+
+    <div class="logo-orbit">
+      <div class="orbit-glow"></div>
+      <svg class="ring-outer" viewBox="0 0 320 320">
+        <circle cx="160" cy="160" r="155" fill="none" stroke="rgba(192,21,42,0.18)" stroke-width="1" stroke-dasharray="4 10"/>
+        <circle cx="160" cy="5" r="5" fill="#c0152a" opacity="0.8"/>
+        <circle cx="160" cy="315" r="5" fill="#c0152a" opacity="0.8"/>
+        <circle cx="5" cy="160" r="5" fill="#00622f" opacity="0.8"/>
+        <circle cx="315" cy="160" r="5" fill="#00622f" opacity="0.8"/>
+      </svg>
+      <svg class="ring-mid" viewBox="0 0 240 240">
+        <circle cx="120" cy="120" r="116" fill="none" stroke="rgba(0,98,47,0.22)" stroke-width="1" stroke-dasharray="2 7"/>
+        <circle cx="120" cy="4" r="3.5" fill="#00622f" opacity="0.7"/>
+        <circle cx="120" cy="236" r="3.5" fill="#00622f" opacity="0.7"/>
+        <circle cx="4" cy="120" r="3.5" fill="#c0152a" opacity="0.7"/>
+        <circle cx="236" cy="120" r="3.5" fill="#c0152a" opacity="0.7"/>
+        <circle cx="202" cy="38" r="2.5" fill="#f5f5f0" opacity="0.25"/>
+        <circle cx="38" cy="202" r="2.5" fill="#f5f5f0" opacity="0.25"/>
+        <circle cx="202" cy="202" r="2.5" fill="#f5f5f0" opacity="0.25"/>
+        <circle cx="38" cy="38" r="2.5" fill="#f5f5f0" opacity="0.25"/>
+      </svg>
+      <svg class="ring-inner" viewBox="0 0 152 152">
+        <circle cx="76" cy="76" r="72" fill="none" stroke="rgba(192,21,42,0.12)" stroke-width="1" stroke-dasharray="1 5"/>
+        <circle cx="76" cy="4" r="3" fill="#c0152a" opacity="0.5"/>
+        <circle cx="76" cy="148" r="3" fill="#00622f" opacity="0.5"/>
+        <circle cx="4" cy="76" r="3" fill="#f5f5f0" opacity="0.3"/>
+        <circle cx="148" cy="76" r="3" fill="#f5f5f0" opacity="0.3"/>
+      </svg>
+      <img class="logo-png" src="assets/ST4F1T_logo.png" alt="ST4F1T CTF Team Logo">
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-label">
+    <span class="arabic-calligraphy">🚨 عاجل 🚨</span>
+  </div>
+  <div style="overflow:hidden;flex:1;">
+    <div class="ticker-scroll">
+      <span class="ticker-item"> فرقة صطافيط تواصل حملاتها وتنجح في السيطرة على تحديات عالية الحماية<span class="tsep"> > </span></span>
+      <span class="ticker-item">المحقق كرومبو يصف بعض المُكَلَّخين ب مربّعين الرَّاس<span class="tsep"> > </span></span>
+      <span class="ticker-item">تم إلقاء القبض على بضعة أَعْلام  (Flags) من طرف عناصر صطافيط و ذلك بمختلف مراكز المسابقات بالمغرب<span class="tsep"> > </span></span>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION ABOUT (statique dans l'index) -->
+<div id="about"></div>
+<div id="about-container">
+  <!-- Le contenu about.html sera chargé ici mais reste visible -->
+</div>
+
+<!-- CONTENEUR POUR LES SECTIONS DYNAMIQUES -->
+<main id="main-content">
+  <div class="loader" id="loader" style="display:none;">Loading...</div>
+  <div id="section-container"></div>
+</main>
+
+<!-- SECTION CONTACT (statique dans l'index) -->
+<div id="contact"></div>
+<div id="contact-container">
+    <!-- Le contenu contact.html sera chargé ici mais reste visible -->
+</div>
+
+<div class="police-band"></div>
+
+<footer>
+  <div class="footer-logo">ST4F1T<span>.</span></div>
+  <div class="footer-copy">🇲🇦 · © 2024 ST4F1T ·</div>
+  <div class="footer-tag">contact@st4f1t.ma</div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

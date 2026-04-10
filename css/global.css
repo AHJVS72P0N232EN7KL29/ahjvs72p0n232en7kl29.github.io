@@ -1,0 +1,827 @@
+:root {
+  --white:   #f5f5f0;
+  --off:     #eae9e3;
+  --red:     #c0152a;
+  --red2:    #e01a32;
+  --green:   #00622f;
+  --green2:  #007a3d;
+  --dark:    #0f0f0f;
+  --charcoal:#1a1a1a;
+  --mid:     #2e2e2e;
+  --gray:    #888;
+  --lgray:   #ccc;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--dark);
+  color: var(--white);
+  font-family: 'Barlow Condensed', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ─── LOADER ─── */
+.loader {
+  text-align: center;
+  padding: 60px;
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--gray);
+}
+
+/* ─── POLICE BAND ─── */
+.police-band {
+  height: 8px;
+  background: linear-gradient(90deg, var(--red) 0%, var(--red) 50%, var(--green) 50%, var(--green) 100%);
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 8px; left: 0; right: 0; z-index: 200;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3rem;
+  background: rgba(15,15,15,0.97);
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--green), var(--red)) 1;
+  backdrop-filter: blur(12px);
+}
+.nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+.nav-logo img { width: 50px; height: 50px; object-fit: contain; filter: drop-shadow(0 0 3px rgba(21, 192, 67, 0.5)); }
+.logo-text { display: flex; flex-direction: column; line-height: 1; }
+.logo-main { font-family: 'Oswald', sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.12em; color: var(--white); }
+.logo-sub  { font-family: 'Share Tech Mono', monospace; font-size: 0.55rem; letter-spacing: 0.25em; color: var(--gray); text-transform: uppercase; }
+.nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+.nav-links a { text-decoration: none; font-family: 'Share Tech Mono', monospace; font-size: 0.72rem; letter-spacing: 0.18em; color: var(--lgray); text-transform: uppercase; transition: color 0.2s; cursor: pointer; }
+.nav-links a:hover { color: var(--red2); }
+.nav-cta { background: var(--red) !important; color: var(--white) !important; padding: 0.5rem 1.2rem !important; transition: background 0.2s !important; }
+.nav-cta:hover { background: var(--red2) !important; color: var(--white) !important; }
+
+/* ─── HERO ─── */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 160px 6vw 80px;  /* ← 120 → 160 */
+  overflow: hidden;
+}
+.hero-livery { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.hero-livery-bar { position: absolute; height: 100%; width: 55px; transform: skewX(-12deg); opacity: 0.07; }
+.hlb1 { background: var(--red); left: 58%; }
+.hlb2 { background: var(--white); left: 62%; opacity: 0.04; }
+.hlb3 { background: var(--green); left: 66%; }
+.hlb4 { background: var(--red); left: 82%; width:180px; opacity:0.035; }
+.hero-glow { position: absolute; top: 30%; left: -10%; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(192,21,42,0.07) 0%, transparent 70%); pointer-events: none; }
+.hero-left { position: relative; z-index: 1; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-family: 'Share Tech Mono', monospace; font-size: 0.72rem; letter-spacing: 0.3em; color: var(--red2); text-transform: uppercase; margin-bottom: 1.5rem; opacity:0; animation: fadeUp 0.7s ease forwards 0.2s; }
+.hero-eyebrow::before, .hero-eyebrow::after { content: ''; width: 30px; height: 1px; background: var(--red); }
+h1.hero-title { font-family: 'Oswald', sans-serif; font-size: clamp(4.5rem, 10vw, 9rem); font-weight: 700; line-height: 0.88; letter-spacing: 0.04em; color: var(--white); opacity:0; animation: fadeUp 0.7s ease forwards 0.4s; }
+h1.hero-title .line-red { color: var(--red2); display: block; }
+h1.hero-title .line-green { color: var(--green2); display: block; font-size: 0.42em; letter-spacing: 0.18em; margin-top: 0.5em; }
+.hero-desc { margin-top: 2rem; font-size: 1.1rem; line-height: 1.75; color: var(--lgray); max-width: 440px; opacity:0; animation: fadeUp 0.7s ease forwards 0.6s; }
+.hero-btn-row { display: flex; gap: 1rem; margin-top: 2.5rem; opacity:0; animation: fadeUp 0.7s ease forwards 0.8s; }
+.btn-primary { display: inline-block; padding: 0.85rem 2.2rem; background: var(--red); color: var(--white); text-decoration: none; font-family: 'Share Tech Mono', monospace; font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; transition: background 0.2s, transform 0.2s; cursor: pointer; }
+.btn-primary:hover { background: var(--red2); transform: translateY(-2px); }
+.btn-outline { display: inline-block; padding: 0.85rem 2.2rem; border: 1px solid var(--green2); color: var(--green2); text-decoration: none; font-family: 'Share Tech Mono', monospace; font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; transition: 0.2s; cursor: pointer; }
+.btn-outline:hover { background: var(--green2); color: var(--white); transform: translateY(-2px); }
+.hero-right { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; opacity:0; animation: fadeIn 1s ease forwards 0.5s; }
+
+/* ─── LOGO WRAPPER ─── */
+.logo-orbit { position: relative; width: 320px; height: 320px; }
+.logo-orbit .ring-outer { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 22s linear infinite; }
+.logo-orbit .ring-mid { position: absolute; inset: 20px; width: calc(100% - 40px); height: calc(100% - 40px); animation: spin-r 14s linear infinite; }
+.logo-orbit .ring-inner { position: absolute; inset: 44px; width: calc(100% - 88px); height: calc(100% - 88px); animation: spin 40s linear infinite; }
+.logo-orbit .orbit-glow { position: absolute; inset: 60px; border-radius: 50%; background: radial-gradient(circle, rgba(192,21,42,0.18) 0%, rgba(0,98,47,0.08) 50%, transparent 70%); animation: pulseGlow 3s ease-in-out infinite; }
+.logo-orbit .logo-png { position: absolute; inset: 5px; width: calc(100% - 10px); height: calc(100% - 10px); object-fit: contain; filter: drop-shadow(0 0 8px rgba(21, 192, 49, 0.45)) drop-shadow(0 0 40px rgba(0,98,47,0.2)); }
+
+.logo-orbit-sm { position: relative; width: 240px; height: 240px; }
+.logo-orbit-sm .ring-outer { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 22s linear infinite; }
+.logo-orbit-sm .ring-mid { position: absolute; inset: 14px; width: calc(100% - 28px); height: calc(100% - 28px); animation: spin-r 14s linear infinite; }
+.logo-orbit-sm .ring-inner { position: absolute; inset: 30px; width: calc(100% - 60px); height: calc(100% - 60px); animation: spin 40s linear infinite; }
+.logo-orbit-sm .orbit-glow { position: absolute; inset: 44px; border-radius: 50%; background: radial-gradient(circle, rgba(192,21,42,0.18) 0%, rgba(0,98,47,0.08) 50%, transparent 70%); animation: pulseGlow 3s ease-in-out infinite; }
+.logo-orbit-sm .logo-png { position: absolute; inset: 28px; width: calc(100% - 56px); height: calc(100% - 56px); object-fit: contain; filter: drop-shadow(0 0 14px rgba(192,21,42,0.4)) drop-shadow(0 0 30px rgba(0,98,47,0.18)); }
+
+/* ─── TICKER ─── */
+.ticker { position: relative; z-index: 10; background: var(--red); overflow: hidden; height: 36px; display: flex; align-items: center; border-top: 2px solid var(--green); border-bottom: 2px solid var(--green); }
+.ticker-label { flex-shrink: 0; background: var(--green); height: 100%; display: flex; align-items: center; padding: 0 1.2rem; font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; color: var(--white); text-transform: uppercase; }
+.ticker-scroll { display: flex; gap: 4rem; animation: ticker-move 25s linear infinite; white-space: nowrap; padding-left: 2rem; }
+.ticker-item { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; letter-spacing: 0.15em; color: rgba(255,255,255,0.9); }
+.tsep { color: rgba(255,255,255,0.4); }
+
+/* ─── SECTIONS COMMUNES ─── */
+section.content { position: relative; padding: 100px 6vw; border-top: 1px solid rgba(255,255,255,0.06); }
+.sec-label { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--red2); margin-bottom: 0.8rem; }
+.sec-title { font-family: 'Oswald', sans-serif; font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 700; letter-spacing: 0.04em; color: var(--white); margin-bottom: 3rem; line-height: 1; }
+.sec-title em { color: var(--red2); font-style: normal; }
+
+/* ─── ABOUT ─── */
+.about-wrap { display: grid; grid-template-columns: 3fr 2fr; gap: 5rem; align-items: start; }
+.about-body p { font-size: 1.15rem; line-height: 1.75; color: var(--lgray); margin-bottom: 1.2rem; }
+.about-body strong { color: var(--white); font-weight: 600; }
+.stripe-divider { display: flex; height: 6px; margin: 2.5rem 0; overflow: hidden; }
+.stripe-divider div { flex: 1; }
+.sd-white { background: var(--white); }
+.sd-red { background: var(--red); }
+.sd-green { background: var(--green); }
+.info-grid { display: flex; flex-direction: column; gap: 0.8rem; }
+.info-row { display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start; padding: 1rem 1.2rem; background: rgba(255,255,255,0.03); border-left: 3px solid var(--red); }
+.info-row.g { border-left-color: var(--green); }
+.info-key { font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em; color: var(--gray); text-transform: uppercase; white-space: nowrap; padding-top: 2px; }
+.info-val { font-family: 'Barlow Condensed', sans-serif; font-size: 1.05rem; font-weight: 600; color: var(--white); }
+
+/* ─── MEMBERS ─── */
+.grid-members { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.06); }
+.member-card { background: var(--charcoal); padding: 2.2rem 1.8rem; position: relative; overflow: hidden; transition: background 0.25s; }
+.member-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--green), var(--red)); transform: scaleX(0); transform-origin: left; transition: transform 0.35s; }
+.member-card:hover::after { transform: scaleX(1); }
+.member-card:hover { background: #222; }
+.m-id { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 0.25em; color: var(--gray); margin-bottom: 1.2rem; text-transform: uppercase; }
+.m-avatar { width: 64px; height: 64px; border-radius: 2px; background: var(--mid); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-family: 'Oswald', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--white); margin-bottom: 1.2rem; position: relative; }
+.badge-dot { position: absolute; bottom: -3px; right: -3px; width: 10px; height: 10px; border-radius: 50%; background: var(--green2); border: 2px solid var(--charcoal); }
+.m-name { font-family: 'Oswald', sans-serif; font-size: 1.3rem; font-weight: 700; letter-spacing: 0.06em; color: var(--white); margin-bottom: 0.2rem; }
+.m-role { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; letter-spacing: 0.18em; color: var(--red2); text-transform: uppercase; margin-bottom: 1.2rem; }
+.m-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.m-tag { font-family: 'Share Tech Mono', monospace; font-size: 0.58rem; letter-spacing: 0.1em; color: var(--gray); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); padding: 0.2rem 0.5rem; }
+
+/* ─── ACHIEVEMENTS ─── */
+.ach-table { width: 100%; border-collapse: collapse; }
+.ach-table thead tr { border-bottom: 2px solid var(--red); }
+.ach-table th { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; color: var(--gray); text-transform: uppercase; text-align: left; padding: 0.8rem 1.2rem; font-weight: 400; }
+.ach-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.2s; }
+.ach-table tbody tr:hover { background: rgba(255,255,255,0.03); }
+.ach-table td { padding: 1.2rem; font-size: 1rem; }
+.place-badge { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Oswald', sans-serif; font-size: 1.2rem; font-weight: 700; }
+.p1 { color: #f0c040; } .p2 { color: #c0c8d8; } .p3 { color: #cd7f32; } .pt { color: var(--red2); }
+.ach-name-cell { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 600; color: var(--white); }
+.ach-sub { font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; color: var(--gray); margin-top: 0.2rem; }
+.cat-badge { display: inline-block; font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2rem 0.6rem; border: 1px solid; }
+.ci { border-color: var(--red); color: var(--red2); }
+.cn { border-color: var(--green); color: var(--green2); }
+.cr { border-color: var(--gray); color: var(--gray); }
+.res { font-family: 'Oswald', sans-serif; font-size: 1.2rem; font-weight: 700; }
+
+/* ─── CTFs ORGANIZED ─── */
+.ctfs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; }
+.ctf-card { background: var(--charcoal); padding: 2rem; border-left: 4px solid var(--red); transition: transform 0.2s; }
+.ctf-card:hover { transform: translateY(-5px); }
+.ctf-date { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--green2); letter-spacing: 0.15em; margin-bottom: 1rem; }
+.ctf-name { font-family: 'Oswald', sans-serif; font-size: 1.4rem; margin-bottom: 1rem; color: var(--white); }
+.ctf-desc { color: var(--lgray); line-height: 1.5; margin-bottom: 1rem; }
+.ctf-stats { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: var(--gray); margin-bottom: 1rem; }
+.ctf-status { display: inline-block; padding: 0.2rem 0.8rem; font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 0.1em; border-radius: 2px; }
+.ctf-status.past { background: rgba(128,128,128,0.2); color: var(--gray); border: 1px solid var(--gray); }
+.ctf-status.upcoming { background: rgba(0,98,47,0.2); color: var(--green2); border: 1px solid var(--green2); }
+
+/* ─── GALLERY ─── */
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+.gallery-item { background: var(--charcoal); overflow: hidden; transition: transform 0.2s; }
+.gallery-item:hover { transform: scale(1.02); }
+.gallery-placeholder { background: linear-gradient(135deg, var(--mid), var(--dark)); height: 200px; display: flex; align-items: center; justify-content: center; font-size: 4rem; color: var(--gray); }
+.gallery-caption { padding: 1rem; font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; color: var(--lgray); text-align: center; }
+
+/* ─── POSTS ─── */
+.posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; }
+.post-card { background: var(--charcoal); padding: 2rem; transition: background 0.2s, transform 0.2s; border-bottom: 2px solid transparent; }
+.post-card:hover { background: #222; transform: translateY(-5px); border-bottom-color: var(--red); }
+.post-date { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--red2); letter-spacing: 0.1em; margin-bottom: 0.8rem; }
+.post-title { font-family: 'Oswald', sans-serif; font-size: 1.3rem; margin-bottom: 1rem; color: var(--white); }
+.post-excerpt { color: var(--lgray); line-height: 1.5; margin-bottom: 1.5rem; }
+.post-link { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: var(--green2); text-decoration: none; letter-spacing: 0.1em; transition: color 0.2s; }
+.post-link:hover { color: var(--red2); }
+
+/* ─── CONTACT ─── */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+.contact-left p { font-size: 1.1rem; line-height: 1.75; color: var(--lgray); margin-bottom: 2rem; }
+.contact-links { display: flex; flex-direction: column; gap: 0.8rem; }
+.c-link { display: flex; align-items: center; gap: 1.2rem; padding: 1rem 1.5rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); text-decoration: none; color: var(--white); font-family: 'Share Tech Mono', monospace; font-size: 0.78rem; letter-spacing: 0.15em; transition: background 0.2s, border-color 0.2s; position: relative; overflow: hidden; }
+.c-link::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--red); }
+.c-link:nth-child(2)::before { background: var(--green); }
+.c-link:nth-child(3)::before { background: var(--white); }
+.c-link:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.15); }
+.c-link .icon { font-size: 1.4rem; }
+.c-link .lbl { flex: 1; }
+.c-link .arr { color: var(--gray); }
+
+/* ─── FOOTER ─── */
+footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 2.5rem 6vw; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+.footer-logo { font-family: 'Oswald', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 0.1em; color: var(--white); }
+.footer-logo span { color: var(--red2); }
+.footer-copy { font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em; color: var(--gray); }
+.footer-tag { font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; color: var(--gray); }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+@keyframes spin-r { from{transform:rotate(0deg)} to{transform:rotate(-360deg)} }
+@keyframes pulseGlow { 0%,100%{opacity:0.6} 50%{opacity:1} }
+@keyframes ticker-move { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  #hero { grid-template-columns: 1fr; text-align: center; }
+  .hero-right { display: none; }
+  nav { padding: 0 1.5rem; }
+  .nav-links { display: none; }
+  .about-wrap, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .ctfs-grid, .posts-grid, .gallery-grid { grid-template-columns: 1fr; }
+}
+
+/* Ajouts pour la gestion des conteneurs statiques */
+#about-container,
+#contact-container {
+  scroll-margin-top: 72px;
+}
+
+#section-container {
+  transition: opacity 0.3s ease;
+  scroll-margin-top: 72px;
+}
+
+/* Ajustement pour le scroll sur toutes les sections */
+section[id] {
+  scroll-margin-top: 72px;
+}
+
+/* ─── TICKER AVEC EFFET URGENT ─── */
+.ticker {
+  position: relative;
+  z-index: 10;
+  background: linear-gradient(90deg, var(--red), #8b0000);
+  overflow: hidden;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  border-top: 2px solid var(--green);
+  border-bottom: 2px solid var(--green);
+  box-shadow: 0 0 15px rgba(192,21,42,0.5);
+}
+
+.ticker-label {
+  flex-shrink: 0;
+  background: var(--dark);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: bold;
+  letter-spacing: 0.15em;
+  color: var(--white);
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Texte "عاجل" stylé avec effet urgent */
+.urgent-text {
+  font-family: 'Arial', 'Share Tech Mono', monospace;
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  color: #ff4444;
+  text-shadow: 
+    0 0 5px #ff0000,
+    0 0 10px #ff0000,
+    0 0 20px #ff0000,
+    0 0 30px #ff0000;
+  animation: urgentBlink 0.8s ease-in-out infinite;
+  background: linear-gradient(45deg, #ff4444, #ff8888);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+  position: relative;
+}
+
+/* Alternative avec effet de glow rouge sur fond sombre */
+.urgent-text-alt {
+  font-family: 'Arial', 'Share Tech Mono', monospace;
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  color: #ff3333;
+  text-shadow: 0 0 8px #ff0000, 0 0 15px #ff0000;
+  animation: urgentPulse 1s ease-in-out infinite;
+  background: rgba(0,0,0,0.3);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+/* Animation blink + glow */
+@keyframes urgentBlink {
+  0%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 20px #ff0000;
+  }
+  50% {
+    opacity: 0.7;
+    text-shadow: 0 0 2px #ff0000, 0 0 5px #ff0000, 0 0 10px #ff6666;
+  }
+}
+
+/* Animation pulse plus douce */
+@keyframes urgentPulse {
+  0%, 100% {
+    text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000;
+    color: #ff4444;
+  }
+  50% {
+    text-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff3333;
+    color: #ff6666;
+  }
+}
+
+/* Animation de glow continu */
+@keyframes urgentGlow {
+  0% {
+    text-shadow: 0 0 2px #ff0000, 0 0 5px #ff0000;
+  }
+  50% {
+    text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff3333;
+  }
+  100% {
+    text-shadow: 0 0 2px #ff0000, 0 0 5px #ff0000;
+  }
+}
+
+/* Version avec bordure clignotante */
+.ticker-label::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255,0,0,0.1);
+  animation: borderFlash 1s step-end infinite;
+  pointer-events: none;
+}
+
+@keyframes borderFlash {
+  0%, 100% {
+    box-shadow: inset 0 0 5px rgba(255,0,0,0.8);
+  }
+  50% {
+    box-shadow: inset 0 0 15px rgba(255,0,0,0.3);
+  }
+}
+
+/* Version avec point d'exclamation animé */
+.urgent-text .exclamation {
+  display: inline-block;
+  animation: shake 0.5s ease-in-out infinite;
+  font-size: 1.2rem;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
+/* Effet de scanline sur le ticker */
+.ticker::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0,0,0,0.1) 0px,
+    rgba(0,0,0,0.1) 2px,
+    transparent 2px,
+    transparent 6px
+  );
+  pointer-events: none;
+}
+
+/* ─── IMPORT DES POLICES ARABES ─── */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Almarai:wght@400;700;800&family=Tajawal:wght@400;500;700;800&display=swap');
+
+/* ─── TICKER AVEC POLICE ARABE ─── */
+.ticker {
+  position: relative;
+  z-index: 10;
+  background: linear-gradient(90deg, var(--red), #8b0000);
+  overflow: hidden;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  border-top: 2px solid var(--green);
+  border-bottom: 2px solid var(--green);
+  box-shadow: 0 0 15px rgba(192,21,42,0.5);
+  direction: ltr; /* Pour l'arabe de droite à gauche */
+}
+
+.ticker-label {
+  flex-shrink: 0;
+  background: var(--dark);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  font-family: 'Cairo', 'Almarai', 'Tajawal', 'Share Tech Mono', monospace;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  gap: 0.5rem;
+}
+
+/* Style pour le texte arabe عاجل */
+.arabic-urgent {
+  font-family: 'Cairo', 'Almarai', 'Tajawal', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: #ff4444;
+  text-shadow: 
+    0 0 5px #ff0000,
+    0 0 10px #ff0000,
+    0 0 20px #ff0000,
+    0 0 30px #ff0000;
+  animation: urgentBlink 0.8s ease-in-out infinite;
+  background: linear-gradient(45deg, #ff4444, #ff8888);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+  position: relative;
+}
+
+/* Style alternatif avec police arabe plus élégante */
+.arabic-urgent-alt {
+  font-family: 'Almarai', 'Cairo', 'Tajawal', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #ff3333;
+  text-shadow: 0 0 8px #ff0000, 0 0 15px #ff0000;
+  animation: urgentPulse 1s ease-in-out infinite;
+  background: rgba(0,0,0,0.3);
+  padding: 0.2rem 0.8rem;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+/* Style avec effet calligraphique */
+.arabic-calligraphy {
+  font-family: 'Tajawal', 'Cairo', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ff5555;
+  text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+  animation: urgentGlow 1s ease-in-out infinite;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Style pour les items du ticker en arabe */
+.ticker-item {
+  font-family: 'Cairo', 'Almarai', 'Tajawal', 'Share Tech Mono', monospace;
+  font-size: 1.0rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.9);
+  direction: rtl;
+}
+
+/* Version bilingue (Arabe + Anglais) */
+.ticker-item-bilingual {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+
+.ticker-item-ar {
+  font-family: 'Cairo', 'Almarai', 'Tajawal', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ffcccc;
+}
+
+.ticker-item-en {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.9);
+}
+
+/* Animations */
+@keyframes urgentBlink {
+  0%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 20px #ff0000;
+  }
+  50% {
+    opacity: 0.7;
+    text-shadow: 0 0 2px #ff0000, 0 0 5px #ff0000, 0 0 10px #ff6666;
+  }
+}
+
+@keyframes urgentPulse {
+  0%, 100% {
+    text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000;
+    color: #ff4444;
+  }
+  50% {
+    text-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff3333;
+    color: #ff6666;
+  }
+}
+
+@keyframes urgentGlow {
+  0% {
+    text-shadow: 0 0 2px #ff0000, 0 0 5px #ff0000;
+  }
+  50% {
+    text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff3333;
+  }
+  100% {
+    text-shadow: 0 0 2px #ff0000, 0 0 5px #ff0000;
+  }
+}
+
+/* Effet de scanline sur le ticker */
+.ticker::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0,0,0,0.1) 0px,
+    rgba(0,0,0,0.1) 2px,
+    transparent 2px,
+    transparent 6px
+  );
+  pointer-events: none;
+}
+
+.member-card {
+  position: relative;
+}
+
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(15, 15, 15, 0.92) 0%,
+    rgba(15, 15, 15, 0.65) 50%,
+    rgba(15, 15, 15, 0.3) 100%
+  );
+  z-index: 0;
+}
+
+.member-card > *:not(.card-overlay) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Correction pour le décalage au chargement */
+html {
+  scroll-padding-top: 72px;  /* Pour tous les ancres */
+}
+
+body {
+  padding-top: 0;
+  margin: 0;
+}
+
+/* Assure que le hero commence bien en haut */
+#hero {
+  margin-top: 0;
+  padding-top: 120px;
+}
+
+/* Pour la première visite, forcer le scroll en haut */
+@media (prefers-reduced-motion: no-preference) {
+  :target {
+    scroll-margin-top: 72px;
+  }
+}
+
+/* ─── STYLES POUR LA GALERIE AVEC IMAGES ─── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.gallery-item {
+  background: var(--charcoal);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  position: relative;
+  cursor: pointer;
+}
+
+.gallery-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.gallery-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  display: block;
+}
+
+.gallery-item:hover .gallery-img {
+  transform: scale(1.05);
+}
+
+.gallery-caption {
+  padding: 1rem 1.2rem 1.2rem;
+  background: linear-gradient(to top, var(--charcoal), var(--dark));
+}
+
+.gallery-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 0.3rem;
+}
+
+.gallery-desc {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--gray);
+  letter-spacing: 0.05em;
+}
+
+/* Lightbox effect au clic (optionnel) */
+.gallery-item {
+  cursor: pointer;
+}
+
+/* Modal pour agrandir l'image (optionnel) */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.95);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border: 2px solid var(--red);
+  border-radius: 4px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: var(--white);
+  font-size: 2rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: var(--red);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .gallery-img {
+    height: 180px;
+  }
+}
+/* ─── BOUTON SONORE EN HAUT À DROITE DU LOGO ─── */
+.sound-button-container {
+  position: absolute;
+  top: -150px;
+  right: 20;
+  z-index: 20;
+}
+
+.sound-button-hero {
+  background: linear-gradient(135deg, var(--dark), var(--charcoal));
+  border: 2px solid var(--red);
+  color: var(--white);
+  padding: 0.5rem 1.2rem;
+  border-radius: 40px;
+  cursor: pointer;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+  background: rgba(0,0,0,0.6);
+}
+
+.sound-button-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.sound-button-hero:hover::before {
+  left: 100%;
+}
+
+.sound-button-hero:hover {
+  transform: scale(1.05);
+  border-color: var(--red2);
+  box-shadow: 0 0 15px rgba(192,21,42,0.6);
+  background: rgba(192,21,42,0.8);
+}
+
+.sound-button-hero:active {
+  transform: scale(0.98);
+}
+
+.sound-icon {
+  font-size: 1rem;
+  animation: soundPulse 1.5s ease-in-out infinite;
+}
+
+.sound-text {
+  font-size: 1.0rem;
+  font-weight: 600;
+}
+
+@keyframes soundPulse {
+  0%, 100% {
+    text-shadow: 0 0 0px var(--red);
+  }
+  50% {
+    text-shadow: 0 0 5px var(--red), 0 0 10px var(--red2);
+  }
+}
+
+/* Animation quand le son joue */
+.sound-button-hero.playing {
+  animation: buttonFlash 0.3s ease-in-out 2;
+}
+
+@keyframes buttonFlash {
+  0%, 100% {
+    background: rgba(0,0,0,0.6);
+    border-color: var(--red);
+  }
+  50% {
+    background: var(--red);
+    border-color: var(--white);
+    box-shadow: 0 0 20px var(--red);
+  }
+}
+
+/* Position relative pour hero-right */
+.hero-right {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity:0;
+  animation: fadeIn 1s ease forwards 0.5s;
+}

