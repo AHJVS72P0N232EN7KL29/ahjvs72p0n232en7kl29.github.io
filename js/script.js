@@ -282,6 +282,8 @@ function initHeroSoundButton() {
     }, 400);
   });
 }
+
+document.addEventListener('DOMContentLoaded', initHeroSoundButton);
 // ─── HAMBURGER MENU ───
 const hamburger = document.getElementById('navHamburger');
 const navLinks = document.querySelector('.nav-links');
@@ -298,5 +300,3 @@ document.querySelectorAll('[data-section]').forEach(link => {
     navLinks?.classList.remove('open');
   });
 });
-
-document.addEventListener('DOMContentLoaded', initHeroSoundButton);
